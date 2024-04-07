@@ -9,11 +9,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongodb": "^6.5.0",
-    "sql.js": "^1.10.2"
+    "sqlite3": "^5.1.7"
   }
 }
