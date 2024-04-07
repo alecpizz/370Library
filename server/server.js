@@ -27,8 +27,18 @@ function askQuestion() {
       readline.close();
       process.exit();
     }
+
     console.log(`ASKING DB: "${answer}"`);
-    db.exec(answer);
+    if(answer.toLowerCase().includes("select"))
+    {
+      db.each(answer, (err, row) => {
+        console.log(row);
+      });
+    }
+    else
+    {
+      db.exec(answer);
+    }
     askQuestion();
   })
 }
