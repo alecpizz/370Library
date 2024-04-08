@@ -12,35 +12,43 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.listen(PORT, async () => {
-  console.log(`\nServer listening on port ${PORT}`);
-  db.each("SELECT * from LOREM", (err, row) => {
-    console.log(row);
-  });
+app.listen(PORT, async () =>
+{
+     console.log(`\nServer listening on port ${PORT}`);
 });
 
-function askQuestion() {
-  readline.question("Enter a query or 'exit' to quit: ", (answer) => {
-    if (answer.toLowerCase() === 'exit') {
-      console.log('exiting!');
-      db.close();
-      readline.close();
-      process.exit();
-    }
+app.post("/login", (req, res) =>
+{
+     console.log(req.body);
+     res.send({userID: "53"}); //we'll send the userID instead of the username
+});
 
-    console.log(`ASKING DB: "${answer}"`);
-    if(answer.toLowerCase().includes("select"))
-    {
-      db.each(answer, (err, row) => {
-        console.log(row);
-      });
-    }
-    else
-    {
-      db.exec(answer);
-    }
-    askQuestion();
-  })
+function askQuestion()
+{
+     readline.question("Enter a query or 'exit' to quit: ", (answer) =>
+     {
+          if (answer.toLowerCase() === 'exit')
+          {
+               console.log('exiting!');
+               db.close();
+               readline.close();
+               process.exit();
+          }
+
+          console.log(`ASKING DB: "${answer}"`);
+          if (answer.toLowerCase().includes("select"))
+          {
+               db.each(answer, (err, row) =>
+               {
+                    console.log(row);
+               });
+          }
+          else
+          {
+               db.exec(answer);
+          }
+          askQuestion();
+     })
 }
 
 askQuestion();
