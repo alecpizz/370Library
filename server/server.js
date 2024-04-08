@@ -23,6 +23,23 @@ app.post("/login", (req, res) =>
      res.send({userID: "53"}); //we'll send the userID instead of the username
 });
 
+app.post("/addToCart", (req, res) => {
+     //do a database thing here where we add the bookID to the user's borrowed books.
+     let book = req.body.bookID;
+     let user = req.body.userID;
+});
+
+app.post("/returnBook", (req, res) => {
+     //do a database thing here where we add the bookID to the user's borrowed books.
+     let book = req.body.bookID;
+     let user = req.body.userID;
+});
+
+app.post("/userBooks", (req, res) => {
+     let user = req.body.userID;
+
+});
+
 function askQuestion()
 {
      readline.question("Enter a query or 'exit' to quit: ", (answer) =>

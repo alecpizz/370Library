@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 const BookSearch = () => {
      let params = useParams();
      useEffect(() => {
-          console.log('getting stuff from db here');
           const requestOptions = {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },
@@ -18,6 +17,36 @@ const BookSearch = () => {
                
           });
     });
+
+    function addToCart(bookID){
+          const userID = getCookie("username");
+          const requestOptions = {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ bookID: bookID, userID: userID })
+          };
+          try {
+               fetch("http://localhost:5050/addToCart", requestOptions);
+          } catch (error) {
+               
+          }
+    }
+
+    function getCookie(cname) {
+     let name = cname + "=";
+     let decodedCookie = decodeURIComponent(document.cookie);
+     let ca = decodedCookie.split(';');
+     for(let i = 0; i <ca.length; i++) {
+       let c = ca[i];
+       while (c.charAt(0) == ' ') {
+         c = c.substring(1);
+       }
+       if (c.indexOf(name) == 0) {
+         return c.substring(name.length, c.length);
+       }
+     }
+     return "";
+   }
 
     const [bookSearchResult, setBookResults] = useState('');
     //need to read in all of the book search result objects
