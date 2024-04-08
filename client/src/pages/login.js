@@ -23,7 +23,7 @@ const Login = () =>
           fetch("http://localhost:5050/login", requestOptions).then((response) => response.json()).then((data) =>
           {
                console.log(data);
-               //redirect to the appropriate page to view books!
+               //redirect to the appropriate page to view books! note: this is not secure
                window.location.href = (`http://localhost:3000/user/${data.userID}`)
 
           }).catch((error) =>

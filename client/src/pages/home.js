@@ -7,23 +7,16 @@ const Home = () => {
         navigate(path);
     }
 
+    const searchRoute = (searchPhrase) => {
+     navigate(`search/${searchPhrase}`);
+    }
+
     const [bookSearch, setBookSearch] = useState('');
 
     const handleSearch = async (e) =>
     {
-          e.prevetnDefault();
-          const requestOptions = {
-               method: 'POST',
-               headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify({ searchText: bookSearch })
-          };
-          fetch("http://localhost:5050/bookSearch", requestOptions).then((response) => response.json()).then((data) =>
-          {
-               console.log(data);
-          }).catch((error) =>
-          {
-               
-          });
+          e.preventDefault();
+          searchRoute(bookSearch);
     }
 
     const handleBook = (e) =>
