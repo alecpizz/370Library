@@ -35,7 +35,6 @@ const Login = () =>
      const handleUserName = (e) =>
      {
           setUsername(e.target.value);
-          document.cookie = `username=${e.target.value}`; //this is really bad
      };
      
      const handlePassword = (e) =>

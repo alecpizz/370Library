@@ -21,6 +21,10 @@ const BookSearch = () => {
     function addToCart(bookID){
           console.log('add to cart' + bookID);
           const userID = getCookie("username");
+          if(userID == "")
+          {
+               return;
+          }
           const requestOptions = {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },

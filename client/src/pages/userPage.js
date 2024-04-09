@@ -19,6 +19,7 @@ const UserPage = () => {
           {
                
           });
+          document.cookie = `username=${params.username}`;
      });
 
      function returnBook(bookID)
@@ -37,6 +38,10 @@ const UserPage = () => {
      }
 
      function buildPage(){
+          if(loanedBooks.length == 0)
+          {
+               return (<div><h2>No Books Loaned.</h2></div>)
+          }
           let elements = [];
           for(let i = 0; i < loanedBooks.length; i++)
           {
@@ -64,9 +69,10 @@ const UserPage = () => {
         <table cellSpacing="0" border="0" width="100%" height="100%">
             <caption>
                 <h1>User Page</h1>
-                <text>Username: {params.userid}</text>
+                <text>User ID: {params.userid}</text>
             </caption>
         </table>
+          <h1>Loaned Books:</h1>
         {buildPage()}
     </div>;
 }

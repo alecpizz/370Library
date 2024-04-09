@@ -23,7 +23,7 @@ app.post("/login", (req, res) =>
      console.log(req.body);
 
      const stmt = db.prepare("SELECT user_id FROM Library_User WHERE user_name = ? AND password = ?");
-     const result = stmt.all(req.body.username, req.body.password);
+     const result = stmt.get(req.body.username, req.body.password);
 
      res.send(JSON.stringify(result)); //we'll send the userID instead of the username
 });
@@ -34,13 +34,23 @@ app.post("/addToCart", (req, res) => {
      //do a database thing here where we add the bookID to the user's borrowed books.
      let book = req.body.bookID;
      let user = req.body.userID;
+     //add the book to the user's loaned books
+     //mark the book as unavaliable
+     const stmt = db.prepare("UPDATE BOOK SET availability = 'unavailable' WHERE copy_id = ?");
+     stmt.run(book);
+     const stmt2 = db.prepare("INSERT INTO loan VALUES (?, ?)"); //this might need more data.
+     stmt2.run(book, user);
 });
 
 app.post("/returnBook", (req, res) => {
-     //do a database thing here where we add the bookID to the user's borrowed books.
+     //remove the book from the user's loaned books
+     //mark the book as avaliable
      let book = req.body.bookID;
      let user = req.body.userID;
-
+     const stmt = db.prepare("UPDATE Book SET availability = 'available' WHERE copy_id = ?");
+     stmt.run(book);
+     const stmt2 = db.prepare("DELETE FROM Loan WHERE user_id = ? AND copy_id = ?");
+     stmt2.run(book, user);
 });
 
 //WHERE book_title LIKE '%$name%'", {$name: name});
@@ -54,7 +64,9 @@ app.post("/bookSearch", (req, res) => {
 
 app.post("/userBooks", (req, res) => {
      let user = req.body.userID;
-
+     const stmt = db.prepare("SELECT * FROM Book, Loan WHERE Book.copy_id = Loan.copy_id AND Loan.user_id = ?");
+     const result = stmt.all(user);
+     res.send(JSON.stringify(result));
 });
 
 function askQuestion()
