@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const UserPage = () => {
     let params = useParams();
     //get the db entry from the user name, don't worry about security right now
     // ex: username/id was Alec, so make a query of all of alec's loaned books.
-    const [loanedBooks, setLoanedBooks] = useEffect('');
+    const [loanedBooks, setLoanedBooks] = useState('');
      useEffect(() => {
           const requestOptions = {
                method: 'POST',
@@ -36,6 +36,30 @@ const UserPage = () => {
           }
      }
 
+     function buildPage(){
+          let elements = [];
+          for(let i = 0; i < loanedBooks.length; i++)
+          {
+               let current = loanedBooks[i];
+               var newElement = (<div>
+                    <h1>Title: {current.book_title}</h1>
+                    <h2>ISBN: {current.ISBN}</h2>
+                    <h3>Dewey Decimal Number: {current.dewey_decimal}</h3>
+                    <h3>Genre: {current.Genre}</h3>
+                    <h3>Copy ID: {current.Copy_id}</h3>
+                    <h3>Author ID: {current.author_id}</h3>
+                    <h3>Publisher ID: {current.publisher_id}</h3>
+                    {buildButton(current.availability == "available", "Return Book", function() {returnBook(current.Copy_id)})}
+               </div>);
+               elements.push(newElement);
+          }
+          return elements;
+        }
+
+        function buildButton(text, onClick){
+          return (<button onClick={onClick}>{text}</button>)
+        }
+
     return <div>
         <table cellSpacing="0" border="0" width="100%" height="100%">
             <caption>
@@ -43,6 +67,7 @@ const UserPage = () => {
                 <text>Username: {params.userid}</text>
             </caption>
         </table>
+        {buildPage()}
     </div>;
 }
 
