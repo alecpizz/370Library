@@ -8,6 +8,7 @@ const Home = () => {
     }
 
     const searchRoute = (searchPhrase) => {
+     if(searchPhrase == "") return;
      navigate(`search/${searchPhrase}`);
     }
 

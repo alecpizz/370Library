@@ -48,17 +48,36 @@ const BookSearch = () => {
      return "";
    }
 
-    const [bookSearchResult, setBookResults] = useState('');
-    //need to read in all of the book search result objects
+   
+   const [bookSearchResult, setBookResults] = useState('');
+   //need to read in all of the book search result objects
+   function buildPage(){
+     let elements = [];
+     for(let i = 0; i < bookSearchResult.length; i++)
+     {
+          let current = bookSearchResult[i];
+          var newElement = (<div>
+               <h1>Title: {current.book_title}</h1>
+               <h2>ISBN: {current.ISBN}</h2>
+               <h3>Dewey Decimal Number: {current.dewey_decimal}</h3>
+               <h3>Genre: {current.Genre}</h3>
+               <h3>Copy ID: {current.Copy_id}</h3>
+               <h3>Author ID: {current.author_id}</h3>
+               <h3>Publisher ID: {current.publisher_id}</h3>
+          </div>);
+          elements.push(newElement);
+     }
+     return elements;
+   }
 
     return <div>
         <table cellSpacing="0" border="0" width="100%" height="100%">
             <caption>
                 <h1>Book Search Page</h1>
                 <text>You searched for: {params.bookname}</text>     
-                <text></text> 
             </caption>
         </table>
+     {buildPage()}
     </div>;
 }
 
