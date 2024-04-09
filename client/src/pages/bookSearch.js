@@ -19,6 +19,7 @@ const BookSearch = () => {
     });
 
     function addToCart(bookID){
+          console.log('add to cart' + bookID);
           const userID = getCookie("username");
           const requestOptions = {
                method: 'POST',
@@ -64,10 +65,17 @@ const BookSearch = () => {
                <h3>Copy ID: {current.Copy_id}</h3>
                <h3>Author ID: {current.author_id}</h3>
                <h3>Publisher ID: {current.publisher_id}</h3>
+               <h3>Avalible: {current.availability}</h3>
+               {buildButton(current.availability == "available", "Add to cart", function() {addToCart(current.Copy_id)})}
           </div>);
           elements.push(newElement);
      }
      return elements;
+   }
+
+   function buildButton(enabled, text, onClick){
+     if(!enabled) return null;
+     return (<button onClick={onClick}>{text}</button>)
    }
 
     return <div>
