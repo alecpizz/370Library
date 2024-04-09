@@ -21,10 +21,16 @@ app.listen(PORT, async () =>
 app.post("/login", (req, res) =>
 {
      console.log(req.body);
-     res.send({userID: "53"}); //we'll send the userID instead of the username
+
+     const stmt = db.prepare("SELECT user_id FROM Library_User WHERE user_name = ? AND password = ?");
+     const result = stmt.all(req.body.username, req.body.password);
+
+     res.send(JSON.stringify(result)); //we'll send the userID instead of the username
 });
 
 app.post("/addToCart", (req, res) => {
+     console.log(req.body);
+
      //do a database thing here where we add the bookID to the user's borrowed books.
      let book = req.body.bookID;
      let user = req.body.userID;
@@ -41,8 +47,8 @@ app.post("/returnBook", (req, res) => {
 
 app.post("/bookSearch", (req, res) => {
 
-     const stmt = db.prepare("SELECT * FROM book WHERE book_title like ?");
-     const result = stmt.all('%' + req.body.bookname + '%');
+     const stmt = db.prepare("SELECT * FROM Book WHERE book_title LIKE ?");
+     const result = stmt.all("%" + req.body.bookname + "%");
      res.send(JSON.stringify(result));
 });
 

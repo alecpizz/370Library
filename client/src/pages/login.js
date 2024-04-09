@@ -24,7 +24,7 @@ const Login = () =>
           {
                console.log(data);
                //redirect to the appropriate page to view books! note: this is not secure
-               window.location.href = (`http://localhost:3000/user/${data.userID}`)
+              window.location.href = (`http://localhost:3000/user/${data.user_id}`)
 
           }).catch((error) =>
           {
