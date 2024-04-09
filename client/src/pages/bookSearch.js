@@ -7,7 +7,7 @@ const BookSearch = () => {
           const requestOptions = {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify({ searchText: params.bookname })
+               body: JSON.stringify({ bookname: params.bookname })
           };
           fetch("http://localhost:5050/bookSearch", requestOptions).then((response) => response.json()).then((data) =>
           {
@@ -55,7 +55,8 @@ const BookSearch = () => {
         <table cellSpacing="0" border="0" width="100%" height="100%">
             <caption>
                 <h1>Book Search Page</h1>
-                <text>You searched for: {params.bookname}</text>
+                <text>You searched for: {params.bookname}</text>     
+                <text></text> 
             </caption>
         </table>
     </div>;

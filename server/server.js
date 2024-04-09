@@ -1,7 +1,8 @@
 import express from 'express'
 import cors from 'cors'
-import sqlite3 from 'sqlite3'
-const db = new sqlite3.Database('test.sqlite');
+import Database from 'better-sqlite3'
+const db = new Database('test.sqlite');
+db.pragma('journal_mode = WAL')
 import rl from 'readline'
 const readline = rl.createInterface({ input: process.stdin, output: process.stdout });
 
@@ -33,6 +34,16 @@ app.post("/returnBook", (req, res) => {
      //do a database thing here where we add the bookID to the user's borrowed books.
      let book = req.body.bookID;
      let user = req.body.userID;
+
+});
+
+//WHERE book_title LIKE '%$name%'", {$name: name});
+
+app.post("/bookSearch", (req, res) => {
+
+     const stmt = db.prepare("SELECT * FROM book WHERE book_title like ?");
+     const result = stmt.all('%' + req.body.bookname + '%');
+     res.send(JSON.stringify(result));
 });
 
 app.post("/userBooks", (req, res) => {
@@ -55,14 +66,15 @@ function askQuestion()
           console.log(`ASKING DB: "${answer}"`);
           if (answer.toLowerCase().includes("select"))
           {
-               db.each(answer, (err, row) =>
-               {
-                    console.log(row);
-               });
+               db.exec(answer);
+               const stmt = db.prepare(answer);
+               console.log(stmt.all());
           }
           else
           {
                db.exec(answer);
+               const stmt = db.prepare(answer);
+               stmt.all();
           }
           askQuestion();
      })
