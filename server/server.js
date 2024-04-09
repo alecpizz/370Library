@@ -80,7 +80,15 @@ function askQuestion()
           {
                db.exec(answer);
                const stmt = db.prepare(answer);
-               stmt.all();
+
+               try
+               {
+                    stmt.all();
+               }
+               catch (error)
+               {
+                    stmt.run();
+               }
           }
           askQuestion();
      })
