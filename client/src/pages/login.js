@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import BookSearch from "./bookSearch";
 
 const Login = () =>
 {
@@ -8,6 +9,30 @@ const Login = () =>
      const [password, setPassword] = useState('');
      const [error, setError] = useState(null);
 
+     useEffect(() => {
+          let userID = getCookie("username");
+          if(userID != "" && userID != "null"){
+               //TODO see if db has our login
+               window.location.href = (`http://localhost:3000/user/${userID}`);
+          }
+     });
+
+     //idk how to make global functions
+     function getCookie(cname) {
+          let name = cname + "=";
+          let decodedCookie = decodeURIComponent(document.cookie);
+          let ca = decodedCookie.split(';');
+          for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+        }
 
 
      const handleLogin = async (e) =>
@@ -24,7 +49,7 @@ const Login = () =>
           {
                console.log(data);
                //redirect to the appropriate page to view books! note: this is not secure
-               document.cookie = `username=${data.user_id}`;
+               document.cookie = `username=${data.user_id};path=/`;
               window.location.href = (`http://localhost:3000/user/${data.user_id}`)
 
           }).catch((error) =>

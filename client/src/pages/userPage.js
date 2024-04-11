@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHref, useParams } from "react-router-dom";
 
 const UserPage = () => {
     let params = useParams();
@@ -20,6 +20,11 @@ const UserPage = () => {
                
           });
      });
+
+     function deleteAllCookies() {
+          document.cookie = `username=null;path=/`;
+          window.location.href = (`http://localhost:3000/`);
+      }
 
      function returnBook(bookID)
      {
@@ -65,8 +70,11 @@ const UserPage = () => {
         }
 
     return <div>
-                <h1 className="text-center">User Page</h1>
-                <body className="text-center">User ID: {params.userid}</body>
+          <div className="text-center">
+                <h1>User Page</h1>
+                <body>User ID: {params.userid}</body>
+                <button onClick={() => deleteAllCookies()}>Log Out</button>
+          </div>
           <h1>Loaned Books:</h1>
         {buildPage()}
     </div>;
