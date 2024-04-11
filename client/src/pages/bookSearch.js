@@ -16,7 +16,15 @@ const BookSearch = () => {
           {
                
           });
+          let userID = getCookie("username");
+          if(userID != "" && userID != "null"){
+               //TODO see if db has our login
+               setLoggedIn(true);
+          }
+
     });
+
+    const [isLoggedIn, setLoggedIn] = useState(false);
 
     function addToCart(bookID){
           console.log('add to cart' + bookID);
@@ -71,7 +79,7 @@ const BookSearch = () => {
                <h3>Author ID: {current.author_id}</h3>
                <h3>Publisher ID: {current.publisher_id}</h3>
                <h3>Avalible: {current.availability}</h3>
-               {buildButton(current.availability == "available", "Add to cart", function() {addToCart(current.Copy_id)})}
+               {buildButton(current.availability == "available" && isLoggedIn, "Check Out Book", function() {addToCart(current.Copy_id)})}
                <br></br>
                <br></br>
           </div>);
