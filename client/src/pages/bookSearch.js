@@ -21,6 +21,7 @@ const BookSearch = () => {
     function addToCart(bookID){
           console.log('add to cart' + bookID);
           const userID = getCookie("username");
+          console.log(userID);
           if(userID == "")
           {
                return;
@@ -71,6 +72,8 @@ const BookSearch = () => {
                <h3>Publisher ID: {current.publisher_id}</h3>
                <h3>Avalible: {current.availability}</h3>
                {buildButton(current.availability == "available", "Add to cart", function() {addToCart(current.Copy_id)})}
+               <br></br>
+               <br></br>
           </div>);
           elements.push(newElement);
      }
@@ -83,12 +86,11 @@ const BookSearch = () => {
    }
 
     return <div>
-        <table cellSpacing="0" border="0" width="100%" height="100%">
-            <caption>
-                <h1>Book Search Page</h1>
-                <text>You searched for: {params.bookname}</text>     
-            </caption>
-        </table>
+          <div className="text-center">
+               <h1>Book Search Page</h1>
+               <text>You searched for: {params.bookname}</text>     
+     </div>
+            
      {buildPage()}
     </div>;
 }

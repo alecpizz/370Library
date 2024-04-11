@@ -10,7 +10,7 @@ const UserPage = () => {
           const requestOptions = {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify({ userID: params.username })
+               body: JSON.stringify({ userID: params.userid })
           };
           fetch("http://localhost:5050/userBooks", requestOptions).then((response) => response.json()).then((data) =>
           {
@@ -19,7 +19,6 @@ const UserPage = () => {
           {
                
           });
-          document.cookie = `username=${params.username}`;
      });
 
      function returnBook(bookID)
@@ -54,7 +53,7 @@ const UserPage = () => {
                     <h3>Copy ID: {current.Copy_id}</h3>
                     <h3>Author ID: {current.author_id}</h3>
                     <h3>Publisher ID: {current.publisher_id}</h3>
-                    {buildButton(current.availability == "available", "Return Book", function() {returnBook(current.Copy_id)})}
+                    {buildButton("Return Book", function() {returnBook(current.Copy_id)})}
                </div>);
                elements.push(newElement);
           }
@@ -66,12 +65,8 @@ const UserPage = () => {
         }
 
     return <div>
-        <table cellSpacing="0" border="0" width="100%" height="100%">
-            <caption>
-                <h1>User Page</h1>
-                <text>User ID: {params.userid}</text>
-            </caption>
-        </table>
+                <h1 className="text-center">User Page</h1>
+                <body className="text-center">User ID: {params.userid}</body>
           <h1>Loaned Books:</h1>
         {buildPage()}
     </div>;

@@ -24,6 +24,7 @@ const Login = () =>
           {
                console.log(data);
                //redirect to the appropriate page to view books! note: this is not secure
+               document.cookie = `username=${data.user_id}`;
               window.location.href = (`http://localhost:3000/user/${data.user_id}`)
 
           }).catch((error) =>
@@ -42,9 +43,8 @@ const Login = () =>
           setPassword(e.target.value);
      }
 
-     return <div>
-          <table cellSpacing="0" border="0" width="100%" height="100%">
-               <caption>
+     return <div className={"text-center"}>
+          
                     <h1>Login Page</h1>
                     <form name="search" onSubmit={handleLogin}>
                          User Name:
@@ -56,8 +56,6 @@ const Login = () =>
                          <input type="submit" value="Login"></input>
                     </form>
                     <text>{error == null ? "" : error}</text>
-               </caption>
-          </table>
      </div>;
 }
 
