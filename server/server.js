@@ -28,6 +28,16 @@ app.post("/userLogin", (req, res) =>
      res.send(JSON.stringify(result)); //we'll send the userID instead of the username
 });
 
+app.post("/empLogin", (req, res) =>
+{
+     console.log(req.body);
+
+     const stmt = db.prepare("SELECT user_id FROM Library_Emp WHERE emp_email = ? AND password = ?");
+     const result = stmt.get(req.body.username, req.body.password);
+
+     res.send(JSON.stringify(result)); //we'll send the userID instead of the username
+});
+
 app.post("/addToCart", (req, res) => {
      console.log(req.body);
 
