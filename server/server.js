@@ -18,7 +18,7 @@ app.listen(PORT, async () =>
      console.log(`\nServer listening on port ${PORT}`);
 });
 
-app.post("/login", (req, res) =>
+app.post("/userLogin", (req, res) =>
 {
      console.log(req.body);
 
@@ -57,8 +57,8 @@ app.post("/returnBook", (req, res) => {
 
 app.post("/bookSearch", (req, res) => {
 
-     const stmt = db.prepare("SELECT * FROM Book WHERE book_title LIKE ?");
-     const result = stmt.all("%" + req.body.bookname + "%");
+     const stmt = db.prepare("SELECT * FROM Book NATURAL JOIN Author WHERE book_title LIKE ? OR author_name LIKE ?");
+     const result = stmt.all("%" + req.body.bookname + "%", "%" + req.body.bookname + "%");
      res.send(JSON.stringify(result));
 });
 

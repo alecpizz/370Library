@@ -45,7 +45,7 @@ const Login = () =>
                headers: { 'Content-Type': 'application/json' },
                body: JSON.stringify({ username: username, password: password })
           };
-          fetch("http://localhost:5050/login", requestOptions).then((response) => response.json()).then((data) =>
+          fetch("http://localhost:5050/userLogin", requestOptions).then((response) => response.json()).then((data) =>
           {
                console.log(data);
                //redirect to the appropriate page to view books! note: this is not secure
