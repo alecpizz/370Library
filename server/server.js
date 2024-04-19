@@ -72,10 +72,25 @@ app.post("/bookSearch", (req, res) => {
      res.send(JSON.stringify(result));
 });
 
+app.post("/addBook", (req, res) => {
+     let data = req.body;
+     const stmt = db.prepare("INSERT INTO Book (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+     const authorID = data.authorName; //TODO get author ID from author name
+     const publisherID = data.publisherName; //TODO get publisher ID from publisher name
+     const result = stmt.bind(data.title, data.isbn, data.deweyDecimalNumber, "avaliable", data.genre, data.copyID, authorID, 0, publisherID);
+})
+
 app.post("/userBooks", (req, res) => {
      let user = req.body.userID;
      const stmt = db.prepare("SELECT * FROM Book WHERE user_id = ?");
      const result = stmt.all(user);
+     res.send(JSON.stringify(result));
+});
+
+app.post("/empData", (req, res) => {
+     let user = req.body.userID;
+     const stmt = db.prepare("SELECT * FROM Library_Emp where emp_id = ?");
+     const result = stmt.get(user);
      res.send(JSON.stringify(result));
 });
 

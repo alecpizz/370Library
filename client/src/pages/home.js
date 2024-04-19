@@ -2,10 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 const Home = () => {
     let navigate = useNavigate();
-    const routeChange = () => {
-        let path = `login`;
-        navigate(path);
-    }
 
     const searchRoute = (searchPhrase) => {
      if(searchPhrase == "") return;
@@ -32,7 +28,6 @@ const Home = () => {
                     <input id="searchform" name="req" size="60" maxLength="200" onChange={handleBook}></input>
                     <input type="submit" value="Book Search"></input>
                 </form>
-                <button onClick={routeChange}>User Login Page</button>
             
     </div>;
 }
