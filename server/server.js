@@ -32,7 +32,7 @@ app.post("/empLogin", (req, res) =>
 {
      console.log(req.body);
 
-     const stmt = db.prepare("SELECT user_id FROM Library_Emp WHERE emp_email = ? AND password = ?");
+     const stmt = db.prepare("SELECT emp_id FROM Library_Emp WHERE emp_email = ? AND password = ?");
      const result = stmt.get(req.body.username, req.body.password);
 
      res.send(JSON.stringify(result)); //we'll send the userID instead of the username
@@ -74,10 +74,25 @@ app.post("/bookSearch", (req, res) => {
 
 app.post("/addBook", (req, res) => {
      let data = req.body;
-     const stmt = db.prepare("INSERT INTO Book (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-     const authorID = data.authorName; //TODO get author ID from author name
-     const publisherID = data.publisherName; //TODO get publisher ID from publisher name
-     const result = stmt.bind(data.title, data.isbn, data.deweyDecimalNumber, "avaliable", data.genre, data.copyID, authorID, 0, publisherID);
+     const stmt2 = db.prepare("SELECT * FROM Publisher WHERE publisher_name LIKE ?");
+     const publisher = stmt2.get("%" + data.publisherName + "%");
+     const stmt3 = db.prepare("SELECT * FROM Author WHERE author_name LIKE ?");
+     const author = stmt3.get("%" + data.authorName + "%");
+     const stmt = 
+     db.prepare("INSERT INTO Book VALUES (:book_title, :ISBN, :dewey_decimal, :availability, :Genre, :Copy_id, :author_id, :user_id, :publisher_id)");
+     const avaliablitiy = "available";
+     const info = stmt.run({
+          book_title: data.title,
+          ISBN: data.isbn,
+          dewey_decimal: data.deweyDecimalNumber,
+          availability: avaliablitiy,
+          Genre: data.genre,
+          Copy_id: data.copyID,
+          author_id: author.author_id,
+          user_id: 0,
+          publisher_id: publisher.publisher_id
+     });
+     res.send(JSON.stringify({result: info.changes}));
 })
 
 app.post("/userBooks", (req, res) => {

@@ -26,6 +26,8 @@ const EmployeePage = () =>
 
      const [bookInputs, setBookInputs] = useState({});
 
+     const [bookAddResponse, setBookAddResponse] = useState('');
+
      const handleChangeEvent = (event) =>
      {
           const name = event.target.name;
@@ -44,7 +46,7 @@ const EmployeePage = () =>
           };
           fetch("http://localhost:5050/addBook", requestOptions).then((response) => response.json()).then((data) =>
           {
-               
+               setBookAddResponse(data.result);    
           }).catch((error) =>
           {
 
@@ -136,6 +138,7 @@ const EmployeePage = () =>
                     <input type="submit" value = "Submit Book!"
                     placeholder="Book Title..."></input>
                </form>
+               <body>{bookAddResponse}</body>
           </div>
      </div>;
 }

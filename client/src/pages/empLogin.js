@@ -38,7 +38,6 @@ const EmpLogin = () =>
      {
           setError(null);
           e.preventDefault();
-          console.log(username);
           const requestOptions = {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },
@@ -46,10 +45,9 @@ const EmpLogin = () =>
           };
           fetch("http://localhost:5050/empLogin", requestOptions).then((response) => response.json()).then((data) =>
           {
-               console.log(data);
                //redirect to the appropriate page to view books! note: this is not secure
                document.cookie = `emp_username=${data.user_id};path=/`;
-              window.location.href = (`http://localhost:3000/user/${data.user_id}`)
+              window.location.href = (`http://localhost:3000/employee/${data.user_id}`)
 
           }).catch((error) =>
           {
@@ -71,7 +69,7 @@ const EmpLogin = () =>
           
                     <h1>Employee Login Page</h1>
                     <form name="search" onSubmit={handleLogin}>
-                         User Name:
+                         Email:
                          <input id="username" name="username" onChange={handleUserName} size="20" maxLength="200"></input>
                          <br></br>
                          Password:
