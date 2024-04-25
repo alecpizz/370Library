@@ -16,4 +16,4 @@ Library for CS370
 
 ## Accessing the database:
 - The database is stored in the 'test.sqlite' file.
-- A 
+- A converted to SQL version is also provided
