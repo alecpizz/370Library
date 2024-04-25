@@ -73,7 +73,7 @@ const EmpLogin = () =>
                          <input id="username" name="username" onChange={handleUserName} size="20" maxLength="200"></input>
                          <br></br>
                          Password:
-                         <input id="password" name="password" onChange={handlePassword} size="20" maxLength="200"></input>
+                         <input id="password" name="password" type="password" onChange={handlePassword} size="20" maxLength="200"></input>
                          <br></br>
                          <input type="submit" value="Login"></input>
                     </form>
